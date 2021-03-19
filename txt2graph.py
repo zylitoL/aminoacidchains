@@ -56,6 +56,16 @@ def adjl2mat(d: dict) -> np.array:
 def mats(fname):
     return [adjl2mat(arr2adjl(arr)) for arr in read(fname)]
 
+def edgeset(mat):
+    edges = set()
+    for i, row in enumerate(mat):
+        for j, entry in enumerate(row):
+            if i < j - 1:
+                continue
+            if entry == 1:
+                edges.add((i, j))
+    return edges
+
 def validate(edges: list, mats) -> bool:
     ret = []
     for i, mat in enumerate(mats):
