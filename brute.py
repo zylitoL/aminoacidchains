@@ -1,4 +1,5 @@
 from itertools import chain, combinations
+import numpy as np
 import txt2graph
 
 def powerset(i):
@@ -14,9 +15,12 @@ def complement_edgeset(edges):
 def bruteforce(matrices):
     for i, mat in enumerate(matrices):
         print("considering graph {}".format(i))
-        for pset in powerset(txt2graph.edgeset(mat)):
+        for j, pset in enumerate(powerset(txt2graph.edgeset(mat))):
+            #print("considering powerset {}".format(j))
             found = False
             for mat2 in matrices:
+                if np.array_equal(mat, mat2):
+                    continue
                 valid = True
                 for edge in pset:
                     if mat2[edge[0]][edge[1]] == 0:
