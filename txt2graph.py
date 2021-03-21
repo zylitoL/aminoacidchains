@@ -2,7 +2,13 @@ import numpy as np
 
 # reads delimited strings into a list of ints
 def readints(s: str) -> list:
-    return [int(i) for i in s.split()]
+    ints = []
+    for i in s.split():
+        if i == "X":
+            ints.append(-1)
+        else:
+            ints.append(int(i))
+    return ints
 
 # reads in filename, returns array of matrix entries
 def read(fname: str) -> np.array:
@@ -31,7 +37,7 @@ def arr2adjl(arr: np.array) -> dict:
     
     for i, row in enumerate(new):
         for j, entry in enumerate(row):
-            if entry == 0:
+            if entry == 0 or entry == -1:
                 continue
             if entry not in dic:
                 dic[entry] = []
@@ -48,7 +54,7 @@ def adjl2mat(d: dict) -> np.array:
     for key, vals in d.items():
         mat[key - 1][key - 1] = 1
         for val in vals:
-            if val == 0:
+            if val == 0 or val == -1:
                 continue
             mat[key - 1][val - 1] = mat[val - 1][key - 1] = 1
     return mat
@@ -76,6 +82,15 @@ def validate(edges: list, mats) -> bool:
         if valid:
             ret.append(mat)
     return ret
+
+def dfsmax(ds, maxelem=float("-inf")):
+    try:
+        if len(ds):
+            for elem in ds:
+                maxelem = max(maxelem, dfsmax(elem))
+            return maxelem
+    except TypeError:
+        return max(maxelem, ds)
 
 def main():
     with open("mats.txt", "w") as f:

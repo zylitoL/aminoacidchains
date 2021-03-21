@@ -14,13 +14,15 @@ def copy(l: list) -> list:
     return [e for e in l]
 
 
-def id3(node):
+def id3(node, nodes=None):
+    if not nodes:
+        nodes = len(node.mats[0])
     if len(node.mats) == 1 or len(node.mats) == 0:
         return None # freedom
 
     edges = []
-    for i in range(16):
-        for j in range(16):
+    for i in range(nodes):
+        for j in range(i + 1, nodes):
             if (i, j) in node.has or (i, j) in node.nts: # no repeats
                 continue
             grphs = txt2graph.validate([(i, j)], node.mats)
@@ -32,11 +34,11 @@ def id3(node):
     
     node.left = Node(node.has, node.nts, nots)
     node.left.nts.append((edge[0], edge[1]))
-    node.left = id3(node.left)
+    node.left = id3(node.left, nodes)
 
     node.has.append((edge[0], edge[1]))
     node.right = Node(node.has, node.nts, edge[2])
-    node.right = id3(node.right)
+    node.right = id3(node.right, nodes)
 
     node.edge = (edge[0], edge[1])
 
