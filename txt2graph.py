@@ -156,6 +156,37 @@ def dfsmax(ds, maxelem=float("-inf")) -> int:
         # Single element
         return max(maxelem, ds)
 
+def validate(edges: list, mats: list) -> list:
+    """Calculates the graphs in a list of adjacency matrix containing the edges.
+
+    Args:
+        edges (list): List of edges
+        mats (list): List of adjacency matrices
+
+    Returns:
+        list: graphs containing edges
+    """
+    ret = []
+    for i, mat in enumerate(mats):
+        valid = True
+        for edge in edges:
+            if mat[edge[0], edge[1]] == 0:
+                valid = False
+        if valid:
+            ret.append(mat)
+    return ret
+
+def copy(l: list) -> list:
+    """Shallow copies a list.
+
+    Args:
+        l (list): A list
+
+    Returns:
+        list: Copy of the list.
+    """
+    return [e for e in l]
+
 def main():
     with open("mats.txt", "w") as f:
         for mat in mats("compact.txt"):
