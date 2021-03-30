@@ -73,11 +73,15 @@ def arr2adjl(arr: np.array) -> dict:
             if entry == 0 or entry == -1:
                 continue
             if entry not in dic:
-                dic[entry] = []
-            dic[entry].append(new[i - 1][j])
-            dic[entry].append(new[i][j - 1])
-            dic[entry].append(new[i + 1][j])
-            dic[entry].append(new[i][j + 1])
+                dic[entry] = set()
+            dic[entry].add(new[i - 1][j])
+            dic[entry].add(new[i][j - 1])
+            dic[entry].add(new[i + 1][j])
+            dic[entry].add(new[i][j + 1])
+    
+    for entry, adjset in dic.items():
+        if 0 in adjset:
+            adjset.remove(0)
     
     return dic
 
