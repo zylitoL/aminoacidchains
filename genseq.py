@@ -52,7 +52,7 @@ def isograph(m1, m2):
             return False
     return True
 
-def genseqswrapper(length, dim: int=2):
+def genseqswrapper(length:int, dim: int=2, dirname: str="chains") -> None:
     res = []
     for seq in tqdm(genseqs(length, dim), total=(2 ** dim) ** (length - 1)):
         if seq is not None:
@@ -61,4 +61,7 @@ def genseqswrapper(length, dim: int=2):
                     break
             else:
                 res.append(seq)
-    return res
+    
+    with open("{}/{}".format(dirname, str(length)), "w") as f:
+        for chain in res:
+            f.write(str(chain))
