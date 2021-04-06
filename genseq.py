@@ -1,7 +1,7 @@
 import numpy as np
 import txt2graph
 import itertools
-from tqdm import tqdm
+# from tqdm import tqdm
 
 def gendirs(length, dim: int=2):
     return (itertools.product(list(range(2 ** dim)), repeat=length))
@@ -52,9 +52,9 @@ def isograph(m1, m2):
             return False
     return True
 
-def genseqswrapper(length:int, dim: int=2, dirname: str="chains") -> None:
+def genseqswrapper(length:int, dim: int=2) -> None:
     res = []
-    for seq in tqdm(genseqs(length, dim), total=(2 ** dim) ** (length - 1)):
+    for seq in genseqs(length, dim):
         if seq is not None:
             for oldseq in res:
                 if isograph(oldseq, seq):
@@ -62,6 +62,11 @@ def genseqswrapper(length:int, dim: int=2, dirname: str="chains") -> None:
             else:
                 res.append(seq)
     
-    with open("{}/{}".format(dirname, str(length)), "w") as f:
-        for chain in res:
-            f.write(str(chain))
+    return res
+
+def main():
+    for i in range(1, 25 + 1):
+        np.savez_compressed("chains2/{}".format(i), *genseqswrapper(i))
+
+if __name__ == "__main__":
+    main()
