@@ -139,7 +139,7 @@ def edgeset(mat):
 
 def dfsmax(ds, maxelem=float("-inf")) -> int:
     """DFS based algorithm to determine the maximum element in a nested
-    iterable data structure/
+    iterable data structure
 
     Args:
         ds (iterable): A data structure
@@ -190,6 +190,31 @@ def copy(l: list) -> list:
         list: Copy of the list.
     """
     return [e for e in l]
+
+def mat2adjs(mat: np.array, inclself: bool=False) -> dict[int, set[int]]:
+    """Converts an adjacency matrix reprsentation into an adjacency set
+    representation. Vertices are 1-indexed.
+
+    Args:
+        mat (np.array): The adjacency matrix of a graph
+        inclself (bool): Whether a vertex is considered adjacent to itself.
+        Defaults to False.
+    
+    Returns:
+        dict: Dictionary mapping vertices to sets of adjacent vertices.
+    """
+    adjs = {}
+    for idx, _ in enumerate(mat):
+        adjs[idx + 1] = set()
+
+    for idx, row in enumerate(mat):
+        rowiter = range(idx, len(row)) if inclself else range(idx + 1, len(row))
+        for j in rowiter:
+            if row[j] == 1:
+                adjs[idx + 1].add(j + 1)
+                adjs[j + 1].add(idx + 1)
+    return adjs
+
 
 def main():
     with open("mats.txt", "w") as f:
