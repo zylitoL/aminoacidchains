@@ -33,3 +33,22 @@ def gendirs(length: int) -> Iterator[Iterable[int]]:
         Iterator[Iterable[int]]: Iterator of direction sequences
     """
     yield product(range(4), repeat=length)
+
+def genseq(dir: Iterator[Iterable[int]]) -> np.array:
+    """Creates an amino acid chain from a sequence of directions, if possible.
+
+    Implementation places the first amino acid in the center of an array,
+    and then places successive amino acids by following the sequence of
+    directions. For this reason, **a direction sequence of n directions gives
+    an amino acid chain with n + 1 amino acid chains.** If the placing of
+    amino acid chains leads to an overlap, **an empty numpy array is returned
+    instead.**
+
+    Args:
+        dir (Iterator[Iterable[int]]): Sequence of directions
+
+    Returns:
+        np.array: The amino acid chain on a lattice if valid, empty numpy array
+        if invalid.
+    """
+    pass
