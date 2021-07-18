@@ -41,33 +41,45 @@ def arr2adjs(arr: np.array, length: int) -> np.array:
                 if j == 0:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i][j + 1])
+                    adj.append(-1)
+                    adj.append(-1)
                 elif j == maxcol - 1:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i][j - 1])
+                    adj.append(-1)
+                    adj.append(-1)
                 else:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i][j + 1])
                     adj.append(arr[i][j - 1])
+                    adj.append(-1)
             elif i == maxrow - 1:
                 if j == 0:
                     adj.append(arr[i - 1][j])
                     adj.append(arr[i][j + 1])
+                    adj.append(-1)
+                    adj.append(-1)
                 elif j == maxcol - 1:
                     adj.append(arr[i - 1][j])
                     adj.append(arr[i][j - 1])
+                    adj.append(-1)
+                    adj.append(-1)
                 else:
                     adj.append(arr[i - 1][j])
                     adj.append(arr[i][j + 1])
                     adj.append(arr[i][j - 1])
+                    adj.append(-1)
             else:
                 if j == 0:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i - 1][j])
                     adj.append(arr[i][j + 1])
+                    adj.append(-1)
                 elif j == maxcol - 1:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i - 1][j])
                     adj.append(arr[i][j - 1])
+                    adj.append(-1)
                 else:
                     adj.append(arr[i + 1][j])
                     adj.append(arr[i - 1][j])
